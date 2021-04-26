@@ -3,7 +3,7 @@ import * as React from "react";
 const Login = ({ navigation }) => {
   return (
     <View>
-      <Text>Login Screen</Text>
+      <Text>Dashbaord </Text>
       <Button
         onPress={() => navigation.navigate("Student")}
         title="Go to Student Dashbaord"
