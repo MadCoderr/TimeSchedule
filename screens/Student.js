@@ -1,6 +1,6 @@
 import { StyleSheet, Text,Button, View } from "react-native";
 import * as React from "react";
-const Student = () => {
+const Student = ({navigation}) => {
   return (
     <View>
       <Text>Steudne Screen</Text>
