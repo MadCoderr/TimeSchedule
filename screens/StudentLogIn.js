@@ -46,7 +46,7 @@ function StudentLogIn(props) {
 
             </Image>
 
-            <Text style={styles.text}>ReSchedule Management System</Text>
+            <Text style={styles.text}>Time ReSchedule Management System</Text>
                 
   
   

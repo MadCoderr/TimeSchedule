@@ -16,7 +16,7 @@ const Login = ({ navigation }) => {
 
      </Image>
 
-     <Text style={styles.text}>ReSchedule Management System</Text>
+     <Text style={styles.text}>Time ReSchedule Management System</Text>
 
       <AppButton  title="Login as Student" color="green" ></AppButton>
       
