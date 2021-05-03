@@ -13,6 +13,7 @@ import Signin from "./screens/Signin";
 import Student from "./screens/Student";
 import Teacher from "./screens/Teacher";
 import StudentSignUp from "./screens/StudentSignUp";
+import StudentLogIn from "./screens/StudentLogIn";
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,7 @@ export default function App() {
   return (
     <UserProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="StudentLogIn">
           <Stack.Screen
             name="Login"
             component={Login}
@@ -53,11 +54,19 @@ export default function App() {
             name="StudentSignUp"
             component={StudentSignUp}
             options={{
-              title: "Sign up", //Set Header Title
+              title: "Student Sign up", //Set Header Title
+            }}
+          />
+          <Stack.Screen
+            name="StudentLogIn"
+            component={StudentLogIn}
+            options={{
+              title: "Student log in", //Set Header Title
             }}
           />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
+    // <StudentSignUp></StudentSignUp>
   );
 }
