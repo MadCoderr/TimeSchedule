@@ -1,6 +1,6 @@
 // libs
 import React, { useState, useContext } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 // components
 import AppTextInput from "../components/AppTextInput";
@@ -126,7 +126,7 @@ function StudentSignUp(props) {
         autoCorrect={false}
         icon="lock"
         secureTextEntry
-        placeholder="Password"
+        placeholder="Confirm password"
         textContentType="passwrod"
         onChange={(e) =>
           setFormData({
@@ -154,6 +154,7 @@ function StudentSignUp(props) {
       />
 
       <AppButton title="SignUp" onPress={handleSubmit} />
+      
     </SafeAreaView>
   );
 }
@@ -162,6 +163,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     paddingTop: 30,
+    marginRight:15,
+    marginLeft:15,
   },
 });
 
