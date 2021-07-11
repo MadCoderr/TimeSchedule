@@ -17,13 +17,11 @@ function AppButton({ title, onPress, color = "secondary" }) {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.secondary,
-    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
     width: "100%",
     marginVertical: 10,
-    
   },
   text: {
     color: colors.white,

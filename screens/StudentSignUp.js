@@ -6,14 +6,11 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import AppTextInput from "../components/AppTextInput";
 import AppButton from "../components/Button";
 
-// firebae
-import firebase from "../lib/firebase";
-
 // context
 import UserContext from "../context/UserAuth";
 
 // collection
-const UserCollection = firebase.firestore().collection("user");
+import { UserCollection } from "../util/collections";
 
 function StudentSignUp(props) {
   const { signUp } = useContext(UserContext);

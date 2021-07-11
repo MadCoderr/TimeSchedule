@@ -1,10 +1,10 @@
 export default {
-    primary: "#fc5c65",
-    secondary: "#4ecdc4",
-    black: "#000",
-    white: "#fff",
-    medium: "#6e6969",
-    light: "#f8f4f4",
-    dark: "#0c0c0c",
-    danger: "#ff5252",
-  };
+  primary: "#FB948F",
+  secondary: "#F2CAC8",
+  tertiary: "#C36B84",
+  quaternary: "#FEBB75",
+  error: "#EB5757",
+  success: "#27AE60",
+  textColor: "#4F3F44",
+  textLightColor: "#A79FA1",
+};
