@@ -22,7 +22,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { useState } from "react";
 
-const TeacherLogin = () => {
+const TeacherLogin = ({ navigation }) => {
   const toast = useToast();
   const [email, setEmail] = useState("");
 
@@ -32,6 +32,7 @@ const TeacherLogin = () => {
         title: "Required fields are missing!",
       });
     } else {
+      navigation.navigate("TeacherHome");
     }
   };
 

@@ -4,8 +4,6 @@ import {
   Text,
   Button,
   Input,
-  Stack,
-  Center,
   Box,
   Flex,
   FormControl,
@@ -29,10 +27,10 @@ const StudentLogin = ({ navigation }) => {
     } else {
       if (checkBatch(batch, regNumb)) {
         navigation.navigate("StudentHome");
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "StudentHome" }],
-        });
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{ name: "StudentHome" }],
+        // });
       } else {
         toast.show({
           title: "Batch Number are not same",

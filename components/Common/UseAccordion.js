@@ -1,12 +1,12 @@
 import { ScrollView } from "react-native";
-import { FlatList, Accordion } from "native-base";
+import { FlatList, Accordion, Text } from "native-base";
 
 import * as React from "react";
 
 // components
 import Card from "./Card";
 
-const UseAccordion = ({ title, data, handleClick }) => {
+const UseAccordion = ({ title, data, handleClick, isTeacher }) => {
   return (
     <Accordion my={1}>
       <Accordion.Item>
@@ -15,13 +15,21 @@ const UseAccordion = ({ title, data, handleClick }) => {
           <Accordion.Icon />
         </Accordion.Summary>
         <Accordion.Details>
-          <FlatList
-            data={data}
-            renderItem={({ item }) => (
-              <Card data={item} handleClick={handleClick} />
-            )}
-            keyExtractor={(item) => item.id}
-          />
+          {data.length > 0 ? (
+            <FlatList
+              data={data}
+              renderItem={({ item }) => (
+                <Card
+                  data={item}
+                  handleClick={handleClick}
+                  isTeacher={isTeacher}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          ) : (
+            <Text>No Schedule CLass</Text>
+          )}
         </Accordion.Details>
       </Accordion.Item>
     </Accordion>

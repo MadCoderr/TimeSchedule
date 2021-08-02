@@ -1,126 +1,98 @@
-// libs
-import React, { useState, useContext } from "react";
-import { Image,Text, SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import {
+  Heading,
+  Text,
+  Button,
+  Input,
+  Box,
+  Flex,
+  FormControl,
+  Select,
+  useToast,
+} from "native-base";
+import * as React from "react";
+import { useState } from "react";
+import { checkBatch } from "../util/helper";
 
-// components
-import AppTextInput from "../components/AppTextInput";
-import AppButton from "../components/Button";
-import colors from "../components/colors";
+const StudentLogin = ({ navigation }) => {
+  const toast = useToast();
+  const [batch, setBatch] = useState("");
+  const [regNumb, setRegNumb] = useState("");
 
-
-// firebae
-import firebase from "../lib/firebase";
-
-// context
-import UserContext from "../context/UserAuth";
-
-// collection
-const UserCollection = firebase.firestore().collection("user");
-
-function StudentLogIn(props) {
-
-    const { signUp } = useContext(UserContext);
-
-    const [formData, setFormData] = useState(null);
-  
-    const handleSubmit = () => {
-      if (formData.email !== "" && formData.password !== "") {
-        signUp(formData.email, formData.password)
-          .then((userCredential) => {
-            console.log("yaya sing up sccessfullly");
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+  const handleClick = () => {
+    if (batch === "" || regNumb === "") {
+      toast.show({
+        title: "Required fields are missing!",
+      });
+    } else {
+      if (checkBatch(batch, regNumb)) {
+        navigation.navigate("StudentHome");
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{ name: "StudentHome" }],
+        // });
       } else {
-        console.log("credentail empty");
+        toast.show({
+          title: "Batch Number are not same",
+        });
       }
-    };
-
-    return (
-        <SafeAreaView style={styles.container}>
-            
-            <Image
-                style={styles.logo}
-                source={require('../assets/logo.png')}>
-
-            </Image>
-
-            <Text style={styles.text}>Time ReSchedule Management System</Text>
-                
-  
-  
-        <AppTextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="email"
-          keyboardType="email-address"
-          placeholder="Email"
-          textContentType="emailAddress"
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              email: e.target.value,
-            })
-          }
-          value={formData?.email || ""}
-        />
-  
-        <AppTextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="lock"
-          secureTextEntry
-          placeholder="Password"
-          textContentType="passwrod"
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              password: e.target.value,
-            })
-          }
-          value={formData?.password || ""}
-        />
-  
-       
-  
-       
-  
-        <AppButton title="LogIn" color='blue' onPress={handleSubmit} />
-       
-        
-      </SafeAreaView>
-    );
-  }
-  
-  const styles = StyleSheet.create({
-    container: {
-      paddingTop: 15,
-      marginRight:15,
-      marginLeft:15,
-    },
-
-    logo:{
-    
-        width:140,
-        height:140,
-        alignSelf:'center'
-
-    
-      },
-    
-      text:{
-        position:'relative',
-        bottom:25,
-        color: colors.black,
-        fontSize: 15,
-        fontWeight: "bold",
-        marginVertical:20,
-        textAlign:'center'
-        
     }
+  };
 
-  });
-  
-  export default StudentLogIn;
-  
+  return (
+    <View style={styles.center}>
+      <Box width="100%">
+        <Flex direction="column" px={5}>
+          <FormControl isRequired>
+            <FormControl.Label>Select Batch</FormControl.Label>
+            <Select
+              selectedValue={batch}
+              width="100%"
+              variant="filled"
+              accessibilityLabel="Select your Batch"
+              placeholder="Select your Batch"
+              onValueChange={(itemValue) => {
+                setBatch(itemValue);
+              }}
+              mt={1}
+            >
+              <Select.Item label="21" value="21" />
+              <Select.Item label="20" value="20" />
+              <Select.Item label="18" value="18" />
+              <Select.Item label="17" value="17" />
+              <Select.Item label="16" value="16" />
+            </Select>
+          </FormControl>
+          <FormControl isRequired mt={5}>
+            <FormControl.Label>Register Number</FormControl.Label>
+            <Input
+              variant="outline"
+              placeholder="Enter your Reg Numb"
+              my={2}
+              value={regNumb}
+              onChangeText={(val) => setRegNumb(val)}
+            />
+          </FormControl>
+          <Button
+            isLoading={false}
+            isLoadingText="Submitting"
+            variant="outline"
+            mt={8}
+            onPress={handleClick}
+          >
+            Submit
+          </Button>
+        </Flex>
+      </Box>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+export default StudentLogin;

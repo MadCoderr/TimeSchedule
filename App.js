@@ -13,6 +13,8 @@ import GetStarted from "./screens/GetStarted";
 import StudentLogin from "./screens/StudentLogin";
 import TeacherLogin from "./screens/TeacherLogin";
 import StudentHome from "./screens/StudentHome";
+import TeacherHome from "./screens/TeacherHome";
+import ReScheduleRequest from "./screens/ReScheduleRequest";
 
 const Stack = createStackNavigator();
 
@@ -49,6 +51,21 @@ export default function App() {
               options={{
                 headerTitle: "Home",
                 headerLeft: null,
+              }}
+            />
+            <Stack.Screen
+              name="TeacherHome"
+              component={TeacherHome}
+              options={{
+                headerTitle: "Home",
+                headerLeft: null,
+              }}
+            />
+            <Stack.Screen
+              name="ReRequest"
+              component={ReScheduleRequest}
+              options={{
+                headerTitle: "ReSchedule Request",
               }}
             />
           </Stack.Navigator>

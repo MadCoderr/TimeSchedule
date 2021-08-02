@@ -38,15 +38,11 @@ const Today = () => {
         {current.prettier.today}, <Text>{current.prettier.month}</Text>
       </Heading>
       <Divider my={2} />
-      {mockupData.timeTable.length > 0 ? (
+      {mockupData.teacher.timeTable.length > 0 ? (
         <FlatList
-          data={mockupData.timeTable}
+          data={mockupData.teacher.timeTable}
           renderItem={({ item }) => (
-            <Card
-              data={item}
-              handleClick={handleClick}
-              isBadge={item.isReschedule}
-            />
+            <Card data={item} handleClick={handleClick} isTeacher />
           )}
           keyExtractor={(item) => item.id}
         />
@@ -60,7 +56,7 @@ const Today = () => {
           <Heading size="md">No Schedule Classes</Heading>
         </Flex>
       )}
-      <UseModal isOpen={showModal} toggle={toggle} data={itemData} isBadge />
+      <UseModal isOpen={showModal} toggle={toggle} data={itemData} isTeacher />
     </Box>
   );
 };

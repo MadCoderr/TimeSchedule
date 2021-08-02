@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button, Text, Flex, Divider, Box, Modal, Badge } from "native-base";
 
-const UseModal = ({ isOpen, toggle, data, isBadge }) => {
+const UseModal = ({ isOpen, toggle, data, isBadge, isTeacher }) => {
   return (
     <Modal isOpen={isOpen} onClose={toggle}>
       <Modal.Content maxWidth="400px">
@@ -21,10 +21,23 @@ const UseModal = ({ isOpen, toggle, data, isBadge }) => {
                 <Badge colorScheme="success">ReSchedule</Badge>
               )}
             </Flex>
-            <Box my={1}>
-              <Text bold>Teacher: </Text>
-              <Text>{data?.teacher}</Text>
-            </Box>
+            {!isTeacher ? (
+              <Box my={1}>
+                <Text bold>Teacher: </Text>
+                <Text>{data?.teacher}</Text>
+              </Box>
+            ) : (
+              <>
+                <Box my={1}>
+                  <Text bold>Semester: </Text>
+                  <Text>{data?.semester || 8}</Text>
+                </Box>
+                <Box my={1}>
+                  <Text bold>Section: </Text>
+                  <Text>{data?.section || "B"}</Text>
+                </Box>
+              </>
+            )}
             {data?.isReschedule && (
               <Box my={1}>
                 <Text bold>Reschedule Date: </Text>

@@ -1,7 +1,7 @@
 import { Pressable, Text, Badge, Flex } from "native-base";
 import React from "react";
 
-const Card = ({ data, handleClick, isBadge, isDate }) => {
+const Card = ({ data, handleClick, isBadge, isDate, isTeacher }) => {
   return (
     <Pressable
       shadow={1}
@@ -29,6 +29,7 @@ const Card = ({ data, handleClick, isBadge, isDate }) => {
       >
         <Text fontSize="xs" bold>
           {isDate && "July 12, 2021"}
+          {isTeacher && `Semester ${data?.semester} - ${data?.section}`}
         </Text>
         <Text fontSize="sm">
           {data.startTime} <Text bold>-</Text> {data.endTime}
