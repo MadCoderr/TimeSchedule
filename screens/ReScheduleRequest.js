@@ -13,22 +13,50 @@ import {
 } from "native-base";
 import * as React from "react";
 import { useState } from "react";
+import uuid from "react-uuid";
 
 // components
 import Picker from "../components/Common/Picker";
 
 // util
 import { formatDate, formatTime } from "../util/dateHelper";
+import { validate } from "../util/helper";
+import mockup from "../util/data";
+import { requestCollection } from "../util/collections";
 
 const Reschedule = () => {
+  const toast = useToast();
+
   const [dateValue, setDateValue] = useState(formatDate(new Date()));
   const [timeValue, setTimeValue] = useState(formatTime(new Date()));
+  const [formData, setFormData] = useState(null);
 
   const [showDate, setShowDate] = useState(false);
   const [showTime, setShowTime] = useState(false);
 
   const toggleDate = () => setShowDate(!showDate);
   const toggleTime = () => setShowTime(!showTime);
+
+  const handleSubmit = () => {
+    let data = {
+      id: uuid(),
+      ...formData,
+      date: dateValue,
+      time: timeValue,
+    };
+
+    if (validate(data)) {
+      requestCollection
+        .doc(data.id)
+        .set(data)
+        .then((res) => console.log("done"))
+        .catch((err) => console.log(err));
+    } else {
+      toast.show({
+        title: "Required fields are missing!",
+      });
+    }
+  };
 
   return (
     <ScrollView>
@@ -39,15 +67,17 @@ const Reschedule = () => {
             <Select
               width="100%"
               variant="filled"
-              accessibilityLabel="Select your Batch"
-              placeholder="Select your Batch"
+              accessibilityLabel="Select Batch"
+              placeholder="Select Batch"
               mt={1}
+              value={formData?.semester || ""}
+              onValueChange={(val) =>
+                setFormData({ ...formData, semester: val })
+              }
             >
-              <Select.Item label="21" value="21" />
-              <Select.Item label="20" value="20" />
-              <Select.Item label="18" value="18" />
-              <Select.Item label="17" value="17" />
-              <Select.Item label="16" value="16" />
+              {mockup.semesters.map((item, i) => (
+                <Select.Item key={i} label={item.label} value={item.value} />
+              ))}
             </Select>
           </FormControl>
           <FormControl isRequired mt={5}>
@@ -55,31 +85,35 @@ const Reschedule = () => {
             <Select
               width="100%"
               variant="filled"
-              accessibilityLabel="Select your Batch"
-              placeholder="Select your Batch"
+              accessibilityLabel="Select Section"
+              placeholder="Select Section"
               mt={1}
+              value={formData?.section || ""}
+              onValueChange={(val) =>
+                setFormData({ ...formData, section: val })
+              }
             >
-              <Select.Item label="21" value="21" />
-              <Select.Item label="20" value="20" />
-              <Select.Item label="18" value="18" />
-              <Select.Item label="17" value="17" />
-              <Select.Item label="16" value="16" />
+              {mockup.sections.map((item, i) => (
+                <Select.Item key={i} label={item.label} value={item.value} />
+              ))}
             </Select>
           </FormControl>
-          <FormControl isRequired mt={5} isDisabled>
+          <FormControl isRequired mt={5}>
             <FormControl.Label>Subject</FormControl.Label>
             <Select
               width="100%"
               variant="filled"
-              accessibilityLabel="Select your Batch"
-              placeholder="Select your Batch"
+              accessibilityLabel="Select Subject"
+              placeholder="Select Subject"
               mt={1}
+              value={formData?.subject || ""}
+              onValueChange={(val) =>
+                setFormData({ ...formData, subject: val })
+              }
             >
-              <Select.Item label="21" value="21" />
-              <Select.Item label="20" value="20" />
-              <Select.Item label="18" value="18" />
-              <Select.Item label="17" value="17" />
-              <Select.Item label="16" value="16" />
+              {mockup.subjects.map((item, i) => (
+                <Select.Item key={i} label={item.label} value={item.value} />
+              ))}
             </Select>
           </FormControl>
           <FormControl mt={5}>
@@ -124,12 +158,12 @@ const Reschedule = () => {
           </FormControl>
           <FormControl mt={5}>
             <FormControl.Label>Comments</FormControl.Label>
-            {/* <Input variant="outline" placeholder="Enter your Reg Numb" my={2} />
-             */}
             <TextArea
               numberOfLines={4}
               textAlignVertical="top"
               placeholder="Write additional comments,"
+              value={formData?.comment || ""}
+              onChangeText={(val) => setFormData({ ...formData, comment: val })}
             />
           </FormControl>
           <Button
@@ -137,6 +171,7 @@ const Reschedule = () => {
             isLoadingText="Submitting"
             variant="outline"
             mt={8}
+            onPress={handleSubmit}
           >
             Submit
           </Button>

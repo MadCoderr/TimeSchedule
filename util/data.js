@@ -330,4 +330,27 @@ export default {
       },
     ],
   },
+  subjects: [
+    { label: "Artificial Intelligence", value: "Artificial Intelligence" },
+    {
+      label: "Intro To Information Security",
+      value: "Intro To Information Security",
+    },
+    { label: "Ethical & Legal Issue", value: "Ethical & Legal Issue" },
+  ],
+  sections: [
+    { label: "A", value: "A" },
+    { label: "B", value: "B" },
+    { label: "C", value: "C" },
+    { label: "D", value: "D" },
+    { label: "E", value: "E" },
+  ],
+  semesters: [
+    { label: "21", value: "21" },
+    { label: "20", value: "20" },
+    { label: "19", value: "19" },
+    { label: "18", value: "18" },
+    { label: "17", value: "17" },
+    { label: "16", value: "16" },
+  ],
 };
