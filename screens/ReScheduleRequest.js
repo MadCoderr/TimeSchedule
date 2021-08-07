@@ -17,6 +17,7 @@ import uuid from "react-uuid";
 
 // components
 import Picker from "../components/Common/Picker";
+import DefaulModal from "../components/Common/DefaulModal";
 
 // util
 import { formatDate, formatTime } from "../util/dateHelper";
@@ -33,9 +34,12 @@ const Reschedule = () => {
 
   const [showDate, setShowDate] = useState(false);
   const [showTime, setShowTime] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const toggleDate = () => setShowDate(!showDate);
   const toggleTime = () => setShowTime(!showTime);
+  const toggleModal = () => setShowModal(!showModal);
 
   const handleSubmit = () => {
     let data = {
@@ -43,14 +47,24 @@ const Reschedule = () => {
       ...formData,
       date: dateValue,
       time: timeValue,
+      name: "Dr. Izhar Ullah",
     };
 
     if (validate(data)) {
+      setLoading(true);
       requestCollection
         .doc(data.id)
         .set(data)
-        .then((res) => console.log("done"))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          setLoading(false);
+          setShowModal(true);
+        })
+        .catch((err) => {
+          setLoading(false);
+          toast.show({
+            title: "Request Failed",
+          });
+        });
     } else {
       toast.show({
         title: "Required fields are missing!",
@@ -67,7 +81,7 @@ const Reschedule = () => {
             <Select
               width="100%"
               variant="filled"
-              accessibilityLabel="Select Batch"
+              accessibilityLabel="Select Semester"
               placeholder="Select Batch"
               mt={1}
               value={formData?.semester || ""}
@@ -167,7 +181,7 @@ const Reschedule = () => {
             />
           </FormControl>
           <Button
-            isLoading={false}
+            isLoading={loading}
             isLoadingText="Submitting"
             variant="outline"
             mt={8}
@@ -176,6 +190,7 @@ const Reschedule = () => {
             Submit
           </Button>
         </Flex>
+        {showModal && <DefaulModal isOpen={showModal} toggle={toggleModal} />}
       </Box>
     </ScrollView>
   );
