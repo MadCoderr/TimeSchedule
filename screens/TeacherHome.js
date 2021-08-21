@@ -24,7 +24,7 @@ const renderScene = SceneMap({
   second: Weekly,
 });
 
-export default function TeacherHome({ navigation }) {
+export default function TeacherHome({ route, navigation }) {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "first", title: "Today" },
@@ -82,7 +82,11 @@ export default function TeacherHome({ navigation }) {
             size={4}
           />
         }
-        onPress={() => navigation.navigate("ReRequest")}
+        onPress={() =>
+          navigation.navigate("ReRequest", {
+            teacher: route.params.teacher,
+          })
+        }
       />
     </NativeBaseProvider>
   );

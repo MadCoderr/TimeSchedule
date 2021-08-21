@@ -25,7 +25,7 @@ import { validate } from "../util/helper";
 import mockup from "../util/data";
 import { requestCollection } from "../util/collections";
 
-const Reschedule = () => {
+const Reschedule = ({ route }) => {
   const toast = useToast();
 
   const [dateValue, setDateValue] = useState(formatDate(new Date()));
@@ -42,12 +42,13 @@ const Reschedule = () => {
   const toggleModal = () => setShowModal(!showModal);
 
   const handleSubmit = () => {
+    const { name } = route.params.teacher;
     let data = {
       id: uuid(),
       ...formData,
       date: dateValue,
       time: timeValue,
-      name: "Dr. Izhar Ullah",
+      name,
     };
 
     if (validate(data)) {
@@ -82,7 +83,7 @@ const Reschedule = () => {
               width="100%"
               variant="filled"
               accessibilityLabel="Select Semester"
-              placeholder="Select Batch"
+              placeholder="Select Semester"
               mt={1}
               value={formData?.semester || ""}
               onValueChange={(val) =>

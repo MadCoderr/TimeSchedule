@@ -21,10 +21,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import * as React from "react";
 import { useState } from "react";
+import { teacherCollection } from "../util/collections";
 
 const TeacherLogin = ({ navigation }) => {
   const toast = useToast();
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = () => {
     if (email === "") {
@@ -32,7 +34,31 @@ const TeacherLogin = ({ navigation }) => {
         title: "Required fields are missing!",
       });
     } else {
-      navigation.navigate("TeacherHome");
+      setIsLoading(true);
+      teacherCollection
+        .where("email", "==", email)
+        .get()
+        .then((snapshot) => {
+          setIsLoading(false);
+          if (snapshot.docs.length > 0) {
+            let teacher = {};
+            snapshot.forEach((doc) => (teacher = doc.data()));
+
+            navigation.navigate("TeacherHome", {
+              teacher,
+            });
+          } else {
+            toast.show({
+              title: "Email Does not exist",
+            });
+          }
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          toast.show({
+            title: err.message,
+          });
+        });
     }
   };
 
@@ -92,8 +118,8 @@ const TeacherLogin = ({ navigation }) => {
             />
           </FormControl>
           <Button
-            isLoading={false}
-            isLoadingText="Submitting"
+            isLoading={isLoading}
+            isLoadingText="Loggin..."
             variant="outline"
             mt={8}
             onPress={handleClick}
